@@ -47,7 +47,7 @@ echo c@(toJSON -> Object s) = "As object: " ++ show s ++ "\nAs coord: " ++ show 
 echo c = "As coord: " ++ show c
 
 -- | Using @-XViewPatterns@ at the top level. Imagine if the implementation is
--- more way more complex (instead of just calling `keyValue`, `wrongKey`, and
+-- way more complex (instead of just calling `keyValue`, `wrongKey`, and
 -- `echo`), you're making an upgrade to aeson-2 and this is a breaking change.
 -- Rather than use CPP and conditional compilation, with a shim and top-level
 -- view patterns the implementation can stay the same except for conversion of
