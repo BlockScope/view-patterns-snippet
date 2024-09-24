@@ -12,7 +12,8 @@ executable view-patterns-snippet
     import:           warnings
     main-is:          Main.hs
     build-depends:
-      , aeson < 2
+      , aeson
+      , aeson-shim
       , base >=4.14.3.0
       , base-compat
       , bytestring
