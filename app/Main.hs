@@ -45,13 +45,20 @@ echo :: Coord -> String
 echo c@(toJSON -> Object s) = "As object: " ++ show s ++ "\nAs coord: " ++ show c
 echo c = "As coord: " ++ show c
 
--- | Using @-XViewPatterns@ at the top level.
+-- | Using @-XViewPatterns@ at the top level. Imagine if the implementation is
+-- more way more complex, you're making an upgrade aeson-2 and this is a
+-- breaking change. Rather than use CPP and conditional compilation, with a shim
+-- and top-level view patterns the implementation can stay the same except for
+-- conversion of an input argument.
 echoTopViewPatterns :: Text -> Coord -> String
 echoTopViewPatterns k (toJSON -> Object (HM.lookup k -> Just (Number v))) = keyValue k v
 echoTopViewPatterns k (toJSON -> Object x) = wrongKey k x
 echoTopViewPatterns _ x = echo x
 
--- | Using @-XViewPatterns@ in a case expression.
+-- | Using @-XViewPatterns@ in a case expression. Like with
+-- `echoTopViewPatterns`, if the implementation effected by a breaking change,
+-- the change is isolated to the case expression then a shim can be added at
+-- that point, in a pattern of the case expression rather than the top level.
 echoCaseViewPatterns :: Text -> Coord -> String
 echoCaseViewPatterns k c =
     case toJSON c of
